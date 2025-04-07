@@ -1,6 +1,7 @@
 mod cli;
 mod math;
 mod config;
+mod dft;
 
 use clap::Parser;
 use env_logger;
@@ -38,6 +39,14 @@ fn main() {
         cli::Commands::Sub { numbers } => math::handle_sub(&numbers),
         cli::Commands::Mul { numbers } => math::handle_mul(&numbers),
         cli::Commands::Div { numbers } => math::handle_div(&numbers),
+        cli::Commands::Dft { input } => {
+            let result = dft::dft(&input);
+            println!("DFT Result:");
+            for (i, value) in result.iter().enumerate() {
+                println!("Index {}: {}", i, value);
+            }
+            log::info!("DFT subcommand executed with input: {:?}", input);
+        },
         cli::Commands::Version => {
             println!("Version: {}", env!("CARGO_PKG_VERSION"));
             log::info!("Version subcommand executed");

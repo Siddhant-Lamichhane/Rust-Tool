@@ -53,6 +53,13 @@ pub enum Commands {
         numbers: Vec<f64>,
     },
 
+    /// Compute the Discrete Fourier Transform (DFT)
+    Dft {
+        /// Real numbers to transform (comma-separated or space-separated)
+        #[arg(short, long, num_args = 1..)]
+        input: Vec<f64>,
+    },
+
     /// Display the version information
     Version,
 }
