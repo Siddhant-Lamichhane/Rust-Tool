@@ -2,10 +2,12 @@ mod cli;
 mod math;
 mod config;
 mod dft;
+mod format;
 
 use clap::Parser;
 use env_logger;
 use log;
+use crate::format::format_complex;
 
 fn main() {
     // Initialize logging.
@@ -43,7 +45,7 @@ fn main() {
             let result = dft::dft(&input);
             println!("DFT Result:");
             for (i, value) in result.iter().enumerate() {
-                println!("Index {}: {}", i, value);
+                println!("Index {}: {}", i, format_complex(value));
             }
             log::info!("DFT subcommand executed with input: {:?}", input);
         },
