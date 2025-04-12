@@ -2,12 +2,14 @@ mod cli;
 mod math;
 mod config;
 mod dft;
+mod fft;
 mod format;
 
 use clap::Parser;
 use env_logger;
 use log;
 use crate::format::format_complex;
+use num_complex::Complex;
 
 fn main() {
     // Initialize logging.
@@ -48,6 +50,23 @@ fn main() {
                 println!("Index {}: {}", i, format_complex(value));
             }
             log::info!("DFT subcommand executed with input: {:?}", input);
+        },
+        cli::Commands::Fft { input } => {
+            // For FFT, check that the input count is a power of two.
+            if !input.len().is_power_of_two() {
+                eprintln!("Input length for FFT must be a power of two.");
+                return;
+            }
+            // Convert input into complex numbers with zero imaginary parts.
+            let input_complex: Vec<Complex<f64>> = input.iter()
+                .map(|&x| Complex::new(x, 0.0))
+                .collect();
+            let result = fft::fft(&input_complex);
+            println!("FFT Result:");
+            for (i, value) in result.iter().enumerate() {
+                println!("Index {}: {}", i, format_complex(value));
+            }
+            log::info!("FFT subcommand executed with input: {:?}", input);
         },
         cli::Commands::Version => {
             println!("Version: {}", env!("CARGO_PKG_VERSION"));

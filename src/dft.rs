@@ -21,5 +21,6 @@ pub fn dft(input: &[f64]) -> Vec<Complex<f64>> {
         }
         output.push(sum);
     }
+    
     output
 }

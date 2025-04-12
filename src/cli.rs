@@ -36,13 +36,13 @@ pub enum Commands {
     },
 
     Sub {
-        /// Numbers to subtract
+        // Numbers to subtract
         #[arg(short, long, num_args = 1..)]
         numbers: Vec<f64>,
     },
 
     Mul {
-        /// Numbers to multiply
+        // Numbers to multiply
         #[arg(short, long, num_args = 1..)]
         numbers: Vec<f64>,
     },
@@ -53,9 +53,16 @@ pub enum Commands {
         numbers: Vec<f64>,
     },
 
-    /// Compute the Discrete Fourier Transform (DFT)
+    // Compute the Discrete Fourier Transform (DFT)
     Dft {
-        /// Real numbers to transform (comma-separated or space-separated)
+        // Real numbers to transform (comma-separated or space-separated)
+        #[arg(short, long, num_args = 1.., allow_hyphen_values = true)]
+        input: Vec<f64>,
+    },
+
+    // Compute the Fast Fourier Transform (FFT)
+    Fft {
+        // Input real numbers for FFT (must be power-of-two in count)
         #[arg(short, long, num_args = 1..)]
         input: Vec<f64>,
     },
